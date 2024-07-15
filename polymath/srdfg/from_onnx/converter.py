@@ -141,7 +141,9 @@ def from_onnx(filepath, infer_shapes=True, use_filename=True, lower=False, verbo
 
     graph = generate_srdfg(onnx_graph, verbose=verbose)
     if use_filename:
-        graph_name = filepath.split("/")[-1].split(".")[0]
+        graph_name_split = filepath.split("/")[-1].split(".")
+        graph_name = '.'.join(graph_name_split[:-1])
+
         graph.set_name(graph_name)
 
     if lower:
@@ -163,7 +165,7 @@ def get_initializers(initializers):
     for i in initializers:
         val = numpy_helper.to_array(i)
         if len(val.shape) == 0:
-            val = np.int(val)
+            val = np.int32(val)
         init_dict[i.name] = val
     return init_dict
 

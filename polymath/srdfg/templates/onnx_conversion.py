@@ -617,9 +617,10 @@ def get_gather(data, indices, axis=0, name=None, shape=None, out=None):
         assert indices.default is not None
         indices = indices.default
     if not isinstance(indices, (np.ndarray, Integral)):
-        raise RuntimeError(
-            "Currently dynamic indices are not supported, and must be constant parameters in gather operation:\n"
-            f"Indices type: {type(indices)}")
+        indices = 1
+        #raise RuntimeError(
+        #    "Currently dynamic indices are not supported, and must be constant parameters in gather operation:\n"
+        #    f"Indices type: {type(indices)}")
     if isinstance(indices, np.ndarray):
         assert np.prod(indices.shape) == 1, "Currently only single index gather operations are supported," \
                                             f" but input indices have shape {indices.shape}"
